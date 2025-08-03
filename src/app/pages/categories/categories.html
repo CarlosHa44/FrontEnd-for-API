@@ -1,0 +1,89 @@
+<div class="min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-gray-900 text-white p-8">
+  <h2 class="text-4xl font-bold mb-6 text-yellow-400 drop-shadow-md text-center">📂 Categorías de Spinosaurus</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage()" class="bg-rose-700 text-white px-4 py-2 rounded-md mb-4 text-center font-semibold shadow-md">
+    {{ errorMessage() }}
+  </div>
+
+  <!-- Formulario -->
+  <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-10 max-w-2xl mx-auto">
+    <h3 class="text-2xl font-semibold text-green-300 mb-4">
+      {{ form().id ? 'Editar Categoría' : 'Nueva Categoría' }}
+    </h3>
+
+    <form (ngSubmit)="save()" class="space-y-4">
+      <div>
+        <label class="block mb-1 text-sm text-gray-300">Nombre</label>
+        <input
+          [(ngModel)]="form().name"
+          name="name"
+          required
+          class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        />
+      </div>
+
+      <div>
+        <label class="block mb-1 text-sm text-gray-300">Descripción</label>
+        <textarea
+          [(ngModel)]="form().description"
+          name="description"
+          required
+          rows="3"
+          class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        ></textarea>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button
+          type="submit"
+          [disabled]="isLoading()"
+          class="bg-yellow-400 text-gray-900 font-bold px-4 py-2 rounded hover:bg-yellow-300 transition"
+        >
+          {{ form().id ? 'Actualizar' : 'Crear' }}
+        </button>
+        <button
+          type="button"
+          (click)="resetForm()"
+          class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto max-w-4xl mx-auto">
+    <table class="w-full bg-gray-800 rounded-lg shadow-lg">
+      <thead class="text-left text-blue-300 uppercase text-sm border-b border-gray-700">
+        <tr>
+          <th class="px-4 py-2">ID</th>
+          <th class="px-4 py-2">Nombre</th>
+          <th class="px-4 py-2">Descripción</th>
+          <th class="px-4 py-2 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of categories()" class="hover:bg-gray-700 transition">
+          <td class="px-4 py-2">{{ c.id }}</td>
+          <td class="px-4 py-2">{{ c.name }}</td>
+          <td class="px-4 py-2">{{ c.description }}</td>
+          <td class="px-4 py-2 text-center space-x-2">
+            <button (click)="edit(c)" class="bg-green-300 text-gray-900 px-3 py-1 rounded hover:bg-green-200 transition">
+              Editar
+            </button>
+            <button (click)="delete(c.id!)" class="bg-rose-500 text-white px-3 py-1 rounded hover:bg-rose-400 transition">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <p class="text-center text-sm text-gray-400 mt-12 italic">
+    “Organiza tus categorías con la precisión de un Spinosaurus cazando en el río.”
+  </p>
+</div>
