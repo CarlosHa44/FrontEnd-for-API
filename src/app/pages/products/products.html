@@ -19,12 +19,16 @@
       <div>
         <label class="block mb-1 text-sm text-gray-300">Nombre</label>
         <input [(ngModel)]="form().name" name="name" required
+          pattern="^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ.,-]{3,100}$"
+          title="Solo letras, números y puntuación básica. Mínimo 3 caracteres."
           class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
       </div>
 
       <div>
         <label class="block mb-1 text-sm text-gray-300">Descripción</label>
         <textarea [(ngModel)]="form().description" name="description" required rows="3"
+          pattern="^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ.,-]{5,300}$"
+          title="Solo letras, números y puntuación básica. Mínimo 5 caracteres."
           class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400"></textarea>
       </div>
 
@@ -35,7 +39,7 @@
             class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
         </div>
         <div>
-          <label class="block mb-1 text-sm text-gray-300">Categoria</label>
+          <label class="block mb-1 text-sm text-gray-300">Categoría</label>
           <select [ngModel]="form().categoryId" (ngModelChange)="updateCategoryId($event)" name="categoryId" required
             class="w-full p-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <option value="" disabled selected>Seleccione una categoría</option>
@@ -68,7 +72,7 @@
           <th class="px-4 py-2">Nombre</th>
           <th class="px-4 py-2">Descripción</th>
           <th class="px-4 py-2">Precio</th>
-          <th class="px-4 py-2">Categoria</th>
+          <th class="px-4 py-2">Categoría</th>
           <th class="px-4 py-2 text-center">Acciones</th>
         </tr>
       </thead>
@@ -78,7 +82,7 @@
           <td class="px-4 py-2">{{ p.name }}</td>
           <td class="px-4 py-2">{{ p.description }}</td>
           <td class="px-4 py-2">{{ p.price | currency:'USD':'symbol':'1.2-2' }}</td>
-          <td class="px-4 py-2">{{ p.categoryId }}</td>
+          <td class="px-4 py-2">{{ getCategoryName(p.categoryId) }}</td>
           <td class="px-4 py-2 text-center space-x-2">
             <button (click)="edit(p)"
               class="bg-green-300 text-gray-900 px-3 py-1 rounded hover:bg-green-200 transition">

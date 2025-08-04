@@ -7,6 +7,7 @@ import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-products',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './products.html',
   styleUrl: './products.css'
@@ -30,7 +31,7 @@ export class Products {
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService // inyectar servicio categorías
+    private categoryService: CategoryService
   ) {
     this.products = this.productService.getProducts();
     this.isLoading = this.productService.isLoading();
@@ -47,8 +48,23 @@ export class Products {
     });
   }
 
+  sanitizeInput(input: string): string {
+    return input
+      .replace(/['";\\]/g, '')  // eliminar caracteres peligrosos
+      .replace(/--/g, '')       // eliminar comentarios SQL
+      .replace(/\s+/g, ' ')     // eliminar espacios repetidos
+      .trim();                  // quitar espacios al inicio/fin
+  }
+
   save(): void {
-    const data = this.form();
+    const raw = this.form();
+    const data = {
+      name: this.sanitizeInput(raw.name),
+      description: this.sanitizeInput(raw.description),
+      price: raw.price,
+      categoryId: raw.categoryId,
+    };
+
     if (this.editingId !== null) {
       this.productService.updateProduct(this.editingId, data);
     } else {
@@ -76,10 +92,12 @@ export class Products {
     this.editingId = null;
     this.form.set({ name: '', description: '', price: 0, categoryId: 0 });
   }
+
   getCategoryName(categoryId: number): string {
     const category = this.categories().find(c => c.id === categoryId);
     return category ? category.name : 'Sin categoría';
   }
+
   updateCategoryId(categoryId: string | number) {
     this.form.update(f => ({
       ...f,
