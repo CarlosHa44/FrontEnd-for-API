@@ -40,8 +40,8 @@
                 }
               ],
               "fileReplacements":[{
-                    "replace": "src/app/core/environment/routes.environment.ts",
-                    "with": "src/app/core/environment/routes.environment.prod.ts"
+                    "replace": "src/app/core/environment/environment.ts",
+                    "with": "src/app/core/environment/environment.prod.ts"
                   }],
               "outputHashing": "all"
             },
