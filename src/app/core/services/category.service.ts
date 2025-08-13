@@ -2,10 +2,11 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Category } from '../models/category.model';
+import { environment } from '../environment/routes.environment';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-  private apiUrl = 'http://localhost:8082/api/categories'; // URL del backend
+  private apiUrl = environment.apiUrl.categories; // URL del backend
 
   // Señales
   private categories = signal<Category[]>([]);

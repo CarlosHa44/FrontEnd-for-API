@@ -2,12 +2,13 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Product } from '../models/product.model';
+import { environment } from '../environment/routes.environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8081/api/products';
+  private apiUrl = environment.apiUrl.products;
 
   private products = signal<Product[]>([]);
   private loading = signal(false);
