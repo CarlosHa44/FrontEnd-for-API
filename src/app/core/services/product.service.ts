@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Product } from '../models/product.model';
-import { environment } from '../environment/routes.environment.prod';
+import { environment } from '../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root',
